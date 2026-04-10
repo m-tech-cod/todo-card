@@ -4,7 +4,7 @@ A modern, responsive Todo Task Card built with **HTML, CSS, and Vanilla JavaScri
 
 ## Live Demo
 
-https://todo-card-sta7.vercel.app/
+https://m-tech-cod.github.io/todo-card/
 
 ## Features
 
