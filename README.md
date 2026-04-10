@@ -31,8 +31,8 @@ A modern, responsive Todo Task Card built with **HTML, CSS, and Vanilla JavaScri
 ## Project Structure
 
 todo_card/
+index.html
 README.md
 todo.css
-todo.html
 todo.js
 todo.png
