@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Todo Task Card</title>
+  <!-- Google Fonts for clean typography (optional but enhances modern look) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="todo.css">
+</head>
+<body>
+ 
+  <main class="demo-container">
+   <!-- Main task card -->
+    <article class="todo-card" data-testid="test-todo-card">
+      
+      <!-- Header (checkbox + title) -->
+      <div class="todo-card__header">
+        <div class="todo-card__checkbox-wrapper">
+          <input 
+            type="checkbox" 
+            id="task-complete-toggle" 
+            class="todo-card__checkbox"
+            data-testid="test-todo-complete-toggle"
+            aria-label="Mark task as complete or incomplete"
+          >
+          <label for="task-complete-toggle" class="todo-card__checkbox-label visually-hidden">Toggle task completion</label>
+        </div>
+        <h3 class="todo-card__title" data-testid="test-todo-title">
+          Define Q3 Development Roadmap
+        </h3>
+      </div>
+
+      <!-- Task description -->
+      <p class="todo-card__description" data-testid="test-todo-description">
+        Align with cross-functional teams, finalize milestones, and prepare stakeholder presentation.
+      </p>
+
+      <!-- Priority and status -->
+      <div class="todo-card__meta">
+        <div class="todo-card__priority" data-testid="test-todo-priority">
+          <span class="priority-badge priority-badge--high">High</span>
+        </div>
+
+        <!-- Task status -->
+        <div class="todo-card__status" data-testid="test-todo-status">
+          <span class="status-badge status-badge--pending">Pending</span>
+        </div>
+      </div>
+
+     <!-- Due date and time remaining -->
+      <div class="todo-card__date-info">
+        <div class="todo-card__due-date">
+          <svg class="icon icon--small" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16 2V6M8 2V6M3 10H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span>Due: </span>
+          <time datetime="2026-04-19" data-testid="test-todo-due-date" id="due-date-display">April 19, 2026</time>
+        </div>
+        <div class="todo-card__time-remaining" data-testid="test-todo-time-remaining">
+          <svg class="icon icon--small" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M12 7V12L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span id="time-remaining-text">—</span>
+        </div>
+      </div>
+
+      <!-- Task tags -->
+      <div class="todo-card__tags-container" data-testid="test-todo-tags">
+        <ul class="todo-tags" aria-label="Task tags">
+          <li class="todo-tags__item">planning</li>
+          <li class="todo-tags__item">product</li>
+          <li class="todo-tags__item">strategy</li>
+          <li class="todo-tags__item" data-testid="test-todo-tag-work">work</li>
+        </ul>
+      </div>
+
+      <!-- Actions -->
+      <div class="todo-card__actions">
+        <button 
+          class="btn btn--secondary" 
+          data-testid="test-todo-edit-button"
+          aria-label="Edit this task"
+        >
+          <svg class="btn__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M17 3L21 7L7 21H3V17L17 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M14 6L18 10" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          Edit
+        </button>
+        <button 
+          class="btn btn--danger" 
+          data-testid="test-todo-delete-button"
+          aria-label="Delete this task"
+        >
+          <svg class="btn__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M4 7H20M10 11V16M14 11V16M5 7L6 19C6 20.1046 6.89543 21 8 21H16C17.1046 21 18 20.1046 18 19L19 7M9 7V4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          Delete
+        </button>
+      </div>
+    </article>
+  </main>
+
+  <script src="todo.js" defer></script>
+</body>
+</html>

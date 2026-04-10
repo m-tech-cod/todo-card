@@ -1,0 +1,368 @@
+/* ---------- GLOBAL RESET & BASE ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
+  background: #f5f7fb;  /* Soft off-white background */
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  line-height: 1.5;
+  color: #1e293b;
+}
+
+/* Center the card container */
+.demo-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ---------- CARD COMPONENT ---------- */
+.todo-card {
+  max-width: 480px;      /* Desktop: clean max-width ~450px (slightly wider for comfort) */
+  width: 100%;
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05), 0 4px 8px rgba(0, 0, 0, 0.02);
+  padding: 1.5rem;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.todo-card:hover {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+}
+
+/* ---------- HEADER: CHECKBOX + TITLE ---------- */
+.todo-card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.todo-card__checkbox-wrapper {
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.todo-card__checkbox {
+  width: 1.25rem;
+  height: 1.25rem;
+  cursor: pointer;
+  accent-color: red;
+  border-radius: 4px;
+  transition: transform 0.1s;
+}
+
+.todo-card__checkbox:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.todo-card__checkbox:active {
+  transform: scale(0.9);
+}
+
+.todo-card__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #0f172a;
+  transition: text-decoration 0.2s ease, color 0.2s;
+  word-break: break-word;
+}
+
+/* Completed title style (applied via JS) */
+.todo-card__title--completed {
+  text-decoration: line-through;
+  color: #94a3b8;
+}
+
+/* ---------- DESCRIPTION ---------- */
+.todo-card__description {
+  font-size: 0.875rem;
+  color: #475569;
+  margin-bottom: 1.25rem;
+  line-height: 1.5;
+}
+
+/* ---------- META ROW (PRIORITY + STATUS) ---------- */
+.todo-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+/* Priority badge styles */
+.priority-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+.priority-badge--high {
+  background: #fee2e2;
+  color: #b91c1c;
+  border-left: 3px solid #ef4444;
+}
+
+.priority-badge--medium {
+  background: #fff3e3;
+  color: #c2410c;
+  border-left: 3px solid #f97316;
+}
+
+.priority-badge--low {
+  background: #e0f2e9;
+  color: #15803d;
+  border-left: 3px solid #22c55e;
+}
+
+/* Status badge styles */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.status-badge--pending {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.status-badge--done {
+  background: #dff9e6;
+  color: #166534;
+}
+
+/* ---------- DUE DATE & TIME REMAINING ---------- */
+.todo-card__date-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding: 0.5rem 0;
+  border-top: 1px solid #eef2f6;
+  border-bottom: 1px solid #eef2f6;
+}
+
+.todo-card__due-date,
+.todo-card__time-remaining {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: #334155;
+  background: #fafcff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+}
+
+.icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  color: #64748b;
+}
+
+.icon--small {
+  width: 1rem;
+  height: 1rem;
+}
+
+.todo-card__due-date time {
+  font-weight: 500;
+  color: #1e293b;
+}
+
+#time-remaining-text {
+  font-weight: 500;
+  color: red;
+}
+
+/* Overdue state styling (JS adds urgency class if needed) */
+.todo-card__time-remaining.overdue #time-remaining-text {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+/* ---------- TAGS SECTION (PILLS) ---------- */
+.todo-card__tags-container {
+  margin-bottom: 1.5rem;
+}
+
+.todo-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+.todo-tags__item {
+  background: #f1f4f9;
+  color: #334155;
+  padding: 0.25rem 0.85rem;
+  border-radius: 40px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: background 0.2s;
+}
+
+.todo-tags__item:hover {
+  background: #e6edf4;
+  transform: translateY(-1px);
+}
+
+/* ---------- ACTION BUTTONS ---------- */
+.todo-card__actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+/* Base button style */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-family: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  border-radius: 40px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  background: transparent;
+}
+
+.btn__icon {
+  width: 1rem;
+  height: 1rem;
+  stroke-width: 1.5;
+}
+
+/* Edit button style (subtle) */
+.btn--secondary {
+  background: #f8fafc;
+  color: #1f3a6b;
+  border: 1px solid #e2e8f0;
+}
+
+.btn--secondary:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+}
+
+.btn--secondary:active {
+  transform: translateY(0);
+}
+
+.btn--secondary:focus-visible {
+  outline: 2px solid red;
+  outline-offset: 2px;
+}
+
+/* Delete button style (red accent) */
+.btn--danger {
+  background: #fff5f5;
+  color: #b91c1c;
+  border: 1px solid #ffcdcd;
+}
+
+.btn--danger:hover {
+  background: #fee2e2;
+  border-color: #fecaca;
+  transform: translateY(-1px);
+}
+
+.btn--danger:active {
+  transform: translateY(0);
+}
+
+.btn--danger:focus-visible {
+  outline: 2px solid #dc2626;
+  outline-offset: 2px;
+}
+
+/* ---------- ACCESSIBILITY HELPERS ---------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ---------- RESPONSIVE TOUCH ADJUSTMENTS ---------- */
+@media (max-width: 520px) {
+  body {
+    padding: 1rem;
+  }
+  .todo-card {
+    padding: 1.25rem;
+  }
+  .todo-card__actions {
+    justify-content: stretch;
+  }
+  .btn {
+    flex: 1;
+    justify-content: center;
+  }
+  .todo-card__date-info {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Smooth focus ring for keyboard navigation */
+button:focus-visible,
+input:focus-visible,
+.todo-card__checkbox:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.todo-card {
+  animation: fadeInUp 0.4s ease;
+}
