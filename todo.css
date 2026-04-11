@@ -27,7 +27,7 @@ body {
 
 /* ---------- CARD COMPONENT ---------- */
 .todo-card {
-  max-width: 480px;      /* Desktop: clean max-width ~450px (slightly wider for comfort) */
+  max-width: 480px;   /* Desktop max width */
   width: 100%;
   background: #ffffff;
   border-radius: 24px;
@@ -81,7 +81,7 @@ body {
   word-break: break-word;
 }
 
-/* Completed title style (applied via JS) */
+/* Completed state */
 .todo-card__title--completed {
   text-decoration: line-through;
   color: #94a3b8;
@@ -202,7 +202,7 @@ body {
   color: red;
 }
 
-/* Overdue state styling (JS adds urgency class if needed) */
+/* Overdue state */
 .todo-card__time-remaining.overdue #time-remaining-text {
   color: #dc2626;
   font-weight: 600;
@@ -344,7 +344,7 @@ body {
   }
 }
 
-/* Smooth focus ring for keyboard navigation */
+/* Focus styles */
 button:focus-visible,
 input:focus-visible,
 .todo-card__checkbox:focus-visible {
