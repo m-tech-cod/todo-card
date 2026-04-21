@@ -3,107 +3,477 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Todo Task Card</title>
-  <!-- Google Fonts for clean typography (optional but enhances modern look) -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="todo.css">
+  <meta name="description" content="HNG Internship Stage 1 Projects - Modern frontend components showcase">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="author" content="ALAYDE M. Araffath">
+  <title>HNG Stage 1 | Frontend Projects</title>
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e9eef5 100%);
+      color: #1e293b;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Typography system */
+    h1, h2, h3 {
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #1e293b 0%, #2d3a4f 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      margin-bottom: 2rem;
+      text-align: center;
+      color: #0f172a;
+    }
+
+    /* Layout container */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* HEADER / HERO SECTION */
+
+    .hero {
+      text-align: center;
+      padding: 4rem 1rem 3rem;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .hero__subtitle {
+      font-size: clamp(1rem, 3vw, 1.25rem);
+      color: #475569;
+      max-width: 600px;
+      margin: 0 auto;
+      font-weight: 400;
+    }
+
+    .highlight{
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    /* PROJECT CARDS SECTION */
+
+    .projects {
+      padding: 4rem 1rem;
+      flex: 1;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* Card component */
+    .project-card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 2rem 1.5rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Animated gradient border on hover */
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .project-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.15);
+      border-color: rgba(59, 130, 246, 0.2);
+    }
+
+    /* Card icon area (decorative) */
+    .project-card__icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      transition: transform 0.2s ease;
+    }
+
+    .project-card:hover .project-card__icon {
+      transform: scale(1.05);
+    }
+
+    .project-card__icon svg {
+      width: 32px;
+      height: 32px;
+      stroke: #3b82f6;
+      stroke-width: 1.5;
+    }
+
+    /* Card typography */
+    .project-card__title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: #0f172a;
+    }
+
+    .project-card__description {
+      color: #475569;
+      margin-bottom: 1.75rem;
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    /* Modern button styles */
+    .project-card__button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: #ffffff;
+      color: #3b82f6;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      width: 100%;
+      font-family: inherit;
+    }
+
+    .project-card__button svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      stroke-width: 2;
+      transition: transform 0.2s ease;
+    }
+
+    .project-card__button:hover {
+      background: #3b82f6;
+      color: white;
+      border-color: #3b82f6;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px -8px rgba(59, 130, 246, 0.4);
+    }
+
+    .project-card__button:hover svg {
+      transform: translateX(4px);
+    }
+
+    .project-card__button:focus-visible {
+      outline: 3px solid #3b82f6;
+      outline-offset: 2px;
+    }
+
+    /* Different subtle variant for second card */
+    .project-card:nth-child(2) .project-card__icon {
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+    }
+    .project-card:nth-child(2) .project-card__icon svg {
+      stroke: #d97706;
+    }
+    .project-card:nth-child(2) .project-card__button:hover {
+      background: #8b5cf6;
+      border-color: #8b5cf6;
+    }
+
+    /* FOOTER */
+
+    .footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(203, 213, 225, 0.3);
+      margin-top: auto;
+    }
+
+    .footer__text {
+      color: #64748b;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+
+    .footer__link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #1e293b;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+    }
+
+    .footer__link:hover {
+        color: #3b82f6;
+    }
+
+    .github-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    /* RESPONSIVE DESIGN */
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1rem;
+      }
+      
+      .hero {
+        padding: 2.5rem 1rem 2rem;
+      }
+      
+      .projects {
+        padding: 2rem 1rem;
+      }
+      
+      .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .project-card {
+        padding: 1.5rem;
+      }
+      
+      .project-card__title {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* Small devices extra polish */
+    @media (max-width: 480px) {
+      .project-card__button {
+        padding: 0.65rem 1.25rem;
+        font-size: 0.8125rem;
+      }
+      
+      .hero__subtitle {
+        font-size: 0.9375rem;
+      }
+    }
+
+    /* Tablet landscape optimization */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .cards-grid {
+        gap: 1.75rem;
+        max-width: 900px;
+      }
+    }
+
+    /* ACCESSIBILITY & UTILITIES */
+
+    .visually-hidden:not(:focus):not(:active) {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Focus visible for keyboard navigation */
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid #3b82f6;
+      outline-offset: 3px;
+      border-radius: 8px;
+    }
+
+    /* Custom scrollbar for modern browsers */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Simple fade-in animation on load */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .project-card {
+      animation: fadeInUp 0.5s ease forwards;
+      opacity: 0;
+    }
+
+    .project-card:first-child {
+      animation-delay: 0.1s;
+    }
+    
+    .project-card:last-child {
+      animation-delay: 0.2s;
+    }
+    
+    .hero {
+      animation: fadeInUp 0.5s ease forwards;
+      opacity: 0;
+      animation-delay: 0.05s;
+    }
+  </style>
 </head>
 <body>
- 
-  <main class="demo-container">
-   <!-- Main task card -->
-    <article class="todo-card" data-testid="test-todo-card">
-      
-      <!-- Header (checkbox + title) -->
-      <div class="todo-card__header">
-        <div class="todo-card__checkbox-wrapper">
-          <input 
-            type="checkbox" 
-            id="task-complete-toggle" 
-            class="todo-card__checkbox"
-            data-testid="test-todo-complete-toggle"
-            aria-label="Mark task as complete or incomplete"
-          >
-          <label for="task-complete-toggle" class="todo-card__checkbox-label visually-hidden">Toggle task completion</label>
-        </div>
-        <h3 class="todo-card__title" data-testid="test-todo-title">
-          Define Q3 Development Roadmap
-        </h3>
-      </div>
-
-      <!-- Task description -->
-      <p class="todo-card__description" data-testid="test-todo-description">
-        Align with cross-functional teams, finalize milestones, and prepare stakeholder presentation.
+  <!-- Header / Hero Section -->
+  <header class="hero" role="banner">
+    <div class="container">
+      <h1>HNG Internship<br><span class="highlight">Stage 1 Projects</span></h1>
+      <p class="hero__subtitle">
+        Frontend Developer • HNG Internship Participant
       </p>
+    </div>
+  </header>
 
-      <!-- Priority and status -->
-      <div class="todo-card__meta">
-        <div class="todo-card__priority" data-testid="test-todo-priority">
-          <span class="priority-badge priority-badge--high">High</span>
-        </div>
+  <!-- Main content: Project cards -->
+  <main class="projects" id="main-content" role="main">
+    <div class="container">
+      <h2 class="visually-hidden">Project Showcase</h2>
+      <div class="cards-grid">
+        
+        <!-- Stage 1a: Todo Task Card -->
+        <article class="project-card" aria-labelledby="todo-card-title">
+          <div class="project-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5C15 6.10457 14.1046 7 13 7H11C9.89543 7 9 6.10457 9 5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M12 12L14 14L18 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 id="todo-card-title" class="project-card__title">Stage 1a</h3>
+          <p class="project-card__description">
+            Interactive Todo Task Card with dynamic time tracking, priority indicators, edit mode, expand/collapse, and real-time status updates. Built with vanilla JS and modern CSS.
+          </p>
+          <a href="todo/index.html" class="project-card__button" aria-label="View Todo Card project" role="button">
+            View Todo Card
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </article>
 
-        <!-- Task status -->
-        <div class="todo-card__status" data-testid="test-todo-status">
-          <span class="status-badge status-badge--pending">Pending</span>
-        </div>
+        <!-- Stage 1b: Profile Card -->
+        <article class="project-card" aria-labelledby="profile-card-title">
+          <div class="project-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 21V19C20 16.8 18.2 15 16 15H8C5.8 15 4 16.8 4 19V21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M17 3.5L19 5.5L23 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 id="profile-card-title" class="project-card__title">Stage 1b</h3>
+          <p class="project-card__description">
+            Elegant Profile Card showcasing personal branding, social links, and responsive design. Clean typography, smooth hover effects, and accessible structure.
+          </p>
+          <a href="profile/index.html" class="project-card__button" aria-label="View Profile Card project" role="button">
+            View Profile Card
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </article>
       </div>
-
-     <!-- Due date and time remaining -->
-      <div class="todo-card__date-info">
-        <div class="todo-card__due-date">
-          <svg class="icon icon--small" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M16 2V6M8 2V6M3 10H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-          <span>Due: </span>
-          <time datetime="2026-04-19" data-testid="test-todo-due-date" id="due-date-display">April 19, 2026</time>
-        </div>
-        <div class="todo-card__time-remaining" data-testid="test-todo-time-remaining">
-          <svg class="icon icon--small" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M12 7V12L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-          <span id="time-remaining-text">—</span>
-        </div>
-      </div>
-
-      <!-- Task tags -->
-      <div class="todo-card__tags-container" data-testid="test-todo-tags">
-        <ul class="todo-tags" aria-label="Task tags">
-          <li class="todo-tags__item">planning</li>
-          <li class="todo-tags__item">product</li>
-          <li class="todo-tags__item">strategy</li>
-          <li class="todo-tags__item" data-testid="test-todo-tag-work">work</li>
-        </ul>
-      </div>
-
-      <!-- Actions -->
-      <div class="todo-card__actions">
-        <button 
-          class="btn btn--secondary" 
-          data-testid="test-todo-edit-button"
-          aria-label="Edit this task"
-        >
-          <svg class="btn__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M17 3L21 7L7 21H3V17L17 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M14 6L18 10" stroke="currentColor" stroke-width="1.5"/>
-          </svg>
-          Edit
-        </button>
-        <button 
-          class="btn btn--danger" 
-          data-testid="test-todo-delete-button"
-          aria-label="Delete this task"
-        >
-          <svg class="btn__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M4 7H20M10 11V16M14 11V16M5 7L6 19C6 20.1046 6.89543 21 8 21H16C17.1046 21 18 20.1046 18 19L19 7M9 7V4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-          Delete
-        </button>
-      </div>
-    </article>
+    </div>
   </main>
 
-  <script src="todo.js" defer></script>
+  <!-- Simple footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <p class="footer__text">
+        Built with by <strong>ALAYDE M. Araffath</strong> - HNG Internship 2026
+      </p>
+      <p class="footer__text" style="margin-top: 0.5rem; font-size: 0.75rem;">
+        <a href="https://github.com/m-tech-cod" target="_blank" class="footer__link">
+            <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 .5C5.73.5.75 5.7.75 12.1c0 5.1 3.29 9.4 7.86 10.93.57.1.78-.25.78-.55v-2.1c-3.2.7-3.88-1.6-3.88-1.6-.52-1.35-1.28-1.7-1.28-1.7-1.05-.74.08-.73.08-.73 1.16.09 1.77 1.2 1.77 1.2 1.04 1.84 2.73 1.3 3.4.99.1-.77.4-1.3.72-1.6-2.55-.3-5.23-1.3-5.23-5.8 0-1.3.45-2.4 1.2-3.3-.12-.3-.52-1.5.12-3.1 0 0 .98-.3 3.2 1.2a10.5 10.5 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.64 1.6.24 2.8.12 3.1.75.9 1.2 2 1.2 3.3 0 4.5-2.7 5.5-5.3 5.8.4.4.75 1 .75 2v3c0 .3.2.65.8.55A10.9 10.9 0 0 0 23.25 12C23.25 5.7 18.27.5 12 .5z"/>
+            </svg>
+            GitHub
+        </a>
+      </p>
+    </div>
+  </footer>
 </body>
 </html>

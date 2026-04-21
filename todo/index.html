@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Advanced Todo Card | HNG Stage 1</title>
+  <!-- Google Fonts for clean typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="todo.css">
+  <style>
+
+    .back-nav {
+      max-width: 480px;
+      margin: 0 auto 1.5rem auto;
+      padding: 0 1rem;
+      animation: fadeInUp 0.4s ease;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #475569;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.875rem;
+      padding: 0.5rem 1rem;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(4px);
+      border-radius: 100px;
+      transition: all 0.25s ease;
+      border: 1px solid rgba(203, 213, 225, 0.5);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .back-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      transition: transform 0.2s ease;
+    }
+
+    .back-link:hover {
+      background: white;
+      color: #3b82f6;
+      transform: translateX(-4px);
+      border-color: #cbd5e1;
+    }
+
+    .back-link:hover .back-icon {
+      transform: translateX(-2px);
+    }
+
+    .back-link:focus-visible {
+      outline: 2px solid #3b82f6;
+      outline-offset: 2px;
+      border-radius: 100px;
+    }
+
+    .profile-link-wrapper {
+      margin-top: 1.5rem;
+    }
+
+    .project-card__button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: #ffffff;
+      color: #3b82f6;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      width: 100%;
+      font-family: inherit;
+    }
+
+    .project-card__button svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      stroke-width: 2;
+      transition: transform 0.2s ease;
+    }
+
+    .project-card__button:hover {
+      background: #3b82f6;
+      color: white;
+      border-color: #3b82f6;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px -8px rgba(59, 130, 246, 0.4);
+    }
+
+    .project-card__button:hover svg {
+      transform: translateX(4px);
+    }
+
+    .project-card__button:focus-visible {
+      outline: 3px solid #3b82f6;
+      outline-offset: 2px;
+    }
+
+    .demo-container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    @media (max-width: 520px) {
+      .project-card__button {
+        padding: 0.65rem 1.25rem;
+        font-size: 0.8125rem;
+      }
+      
+      .back-nav {
+        margin-bottom: 1rem;
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="back-nav" aria-label="Navigation">
+    <a href="../index.html" class="back-link" aria-label="Go back to homepage">
+      <svg class="back-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Back to Home
+    </a>
+  </nav>
+
+  <main class="demo-container">
+    <article class="todo-card" data-testid="test-todo-card">
+      
+      <!-- Header (checkbox + title) -->
+      <div class="todo-card__header">
+        <div class="todo-card__checkbox-wrapper">
+          <input 
+            type="checkbox" 
+            id="task-complete-toggle" 
+            class="todo-card__checkbox"
+            data-testid="test-todo-complete-toggle"
+            aria-label="Mark task as complete or incomplete"
+          >
+          <label for="task-complete-toggle" class="todo-card__checkbox-label visually-hidden">Toggle task completion</label>
+        </div>
+        <h3 class="todo-card__title" data-testid="test-todo-title">
+          Define Q3 Development Roadmap
+        </h3>
+      </div>
+
+      <!-- Description with expand/collapse -->
+      <div class="todo-card__description-wrapper">
+        <p class="todo-card__description" data-testid="test-todo-description" id="task-description">
+          Align with cross-functional teams, finalize milestones, and prepare stakeholder presentation. This is a detailed task that requires collaboration across product, engineering, and design teams to ensure everyone is aligned on the Q3 objectives.
+        </p>
+        <button 
+          class="expand-toggle" 
+          data-testid="test-todo-expand-toggle"
+          aria-expanded="false"
+          aria-controls="collapsible-content"
+          aria-label="Expand or collapse description"
+        >
+          <span class="expand-toggle__text">Show more</span>
+          <svg class="expand-toggle__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </button>
+      </div>
+      <div class="todo-card__collapsible-section" data-testid="test-todo-collapsible-section" id="collapsible-content" hidden>
+        <p class="todo-card__description-full">
+          Additional details: The roadmap should include key milestones for frontend architecture, backend API improvements, and user testing phases. Stakeholder presentation is scheduled for end of month.
+        </p>
+      </div>
+
+      <!-- Priority and status -->
+      <div class="todo-card__meta">
+        <div class="todo-card__priority" data-testid="test-todo-priority">
+          <span class="priority-badge priority-badge--high">High</span>
+        </div>
+        
+        <div class="priority-indicator" data-testid="test-todo-priority-indicator">
+          <span class="priority-dot priority-dot--high"></span>
+          <span class="priority-label">High Priority</span>
+        </div>
+
+        <!-- Status control dropdown -->
+        <div class="todo-card__status-control">
+          <label for="status-select" class="visually-hidden">Task status</label>
+          <select 
+            id="status-select" 
+            class="status-select" 
+            data-testid="test-todo-status-control"
+            aria-label="Change task status"
+          >
+            <option value="pending">Pending</option>
+            <option value="in-progress">In Progress</option>
+            <option value="done">Done</option>
+          </select>
+        </div>
+
+        <!-- Task status badge -->
+        <div class="todo-card__status" data-testid="test-todo-status">
+          <span class="status-badge status-badge--pending">Pending</span>
+        </div>
+      </div>
+
+      <!-- Due date and time remaining -->
+      <div class="todo-card__date-info">
+        <div class="todo-card__due-date">
+          <svg class="icon icon--small" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16 2V6M8 2V6M3 10H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span>Due: </span>
+          <time datetime="2026-04-19" data-testid="test-todo-due-date" id="due-date-display">April 19, 2026</time>
+        </div>
+        <div class="todo-card__time-remaining" data-testid="test-todo-time-remaining">
+          <svg class="icon icon--small" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M12 7V12L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span id="time-remaining-text">—</span>
+        </div>
+        <!-- Overdue indicator -->
+        <div class="overdue-indicator" data-testid="test-todo-overdue-indicator" aria-live="polite"></div>
+      </div>
+
+      <div class="todo-card__tags-container" data-testid="test-todo-tags">
+        <ul class="todo-tags" aria-label="Task tags">
+          <li class="todo-tags__item">planning</li>
+          <li class="todo-tags__item">product</li>
+          <li class="todo-tags__item">strategy</li>
+          <li class="todo-tags__item">work</li>
+        </ul>
+      </div>
+
+      <!-- Edit Form (hidden by default) -->
+      <div class="todo-card__edit-form" data-testid="test-todo-edit-form" hidden>
+        <div class="edit-form__field">
+          <label for="edit-title" class="edit-form__label">Title</label>
+          <input 
+            type="text" 
+            id="edit-title" 
+            class="edit-form__input" 
+            data-testid="test-todo-edit-title-input"
+            placeholder="Task title"
+          >
+        </div>
+        
+        <div class="edit-form__field">
+          <label for="edit-description" class="edit-form__label">Description</label>
+          <textarea 
+            id="edit-description" 
+            class="edit-form__textarea" 
+            data-testid="test-todo-edit-description-input"
+            rows="3"
+            placeholder="Task description"
+          ></textarea>
+        </div>
+        
+        <div class="edit-form__field">
+          <label for="edit-priority" class="edit-form__label">Priority</label>
+          <select 
+            id="edit-priority" 
+            class="edit-form__select" 
+            data-testid="test-todo-edit-priority-select"
+          >
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
+        
+        <div class="edit-form__field">
+          <label for="edit-due-date" class="edit-form__label">Due Date</label>
+          <input 
+            type="date" 
+            id="edit-due-date" 
+            class="edit-form__input" 
+            data-testid="test-todo-edit-due-date-input"
+          >
+        </div>
+        
+        <div class="edit-form__actions">
+          <button class="btn btn--primary" data-testid="test-todo-save-button" type="button">Save</button>
+          <button class="btn btn--secondary" data-testid="test-todo-cancel-button" type="button">Cancel</button>
+        </div>
+      </div>
+
+      <div class="todo-card__actions">
+        <button 
+          class="btn btn--secondary" 
+          data-testid="test-todo-edit-button"
+          aria-label="Edit this task"
+        >
+          <svg class="btn__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M17 3L21 7L7 21H3V17L17 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M14 6L18 10" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          Edit
+        </button>
+        <button 
+          class="btn btn--danger" 
+          data-testid="test-todo-delete-button"
+          aria-label="Delete this task"
+        >
+          <svg class="btn__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M4 7H20M10 11V16M14 11V16M5 7L6 19C6 20.1046 6.89543 21 8 21H16C17.1046 21 18 20.1046 18 19L19 7M9 7V4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          Delete
+        </button>
+      </div>
+
+      <!-- Bouton View Profile Card -->
+      <div class="profile-link-wrapper">
+        <a href="../profile/index.html" class="project-card__button" aria-label="View Profile Card project">
+          View Profile Card
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <script src="todo.js" defer></script>
+</body>
+</html>
